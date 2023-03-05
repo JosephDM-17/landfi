@@ -1,0 +1,17 @@
+.navbar{
+    height: 50px;
+    background-color: #e97b22;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin: 20px;
+
+}
+
+.avatar{
+    position:fixed;
+    height: 30px;
+    right:20px;
+    width:30px
+}
