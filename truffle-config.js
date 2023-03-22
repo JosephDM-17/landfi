@@ -58,6 +58,11 @@ module.exports = {
    */
 
   networks: {
+    development: {
+      host:"HTTP://127.0.0.1",
+      port: 7545,
+      network_id:"*"
+    }
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
     // You should run a client (like ganache, geth, or parity) in a separate terminal
@@ -97,6 +102,8 @@ module.exports = {
     //   production: true    // Treats this network as if it was a public net. (default: false)
     // }
   },
+  // contracts_directory:'./src/contracts',
+  // contracts_build_directory:'src/abis/',
 
   // Set default mocha options here, use special reporters, etc.
   mocha: {
@@ -107,6 +114,10 @@ module.exports = {
   compilers: {
     solc: {
       version: "0.8.19",      // Fetch exact version from solc-bin (default: truffle's version)
+      optimizer:{
+        enabled:true,
+        runs: 200
+      }
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
