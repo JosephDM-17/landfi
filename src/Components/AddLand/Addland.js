@@ -8,9 +8,9 @@ import { doc, setDoc } from "firebase/firestore";
 // import 'firebase/firebase'
 import { db } from "../../firebase/config";
 // import {FirebaseContext} from '../../store/Context'
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function Addland() {
-  // const navigate=useNavigate();
+  const navigate=useNavigate();
   // const {firebase} = useContext(FirebaseContext)
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -46,6 +46,7 @@ function Addland() {
     setEmail('')
     setPrice('')
     setCity('')
+    navigate('/')
     
 
   };
