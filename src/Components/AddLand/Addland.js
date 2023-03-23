@@ -46,7 +46,7 @@ function Addland() {
     setEmail('')
     setPrice('')
     setCity('')
-    navigate('/')
+    navigate('/landing')
     
 
   };

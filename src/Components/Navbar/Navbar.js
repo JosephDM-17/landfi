@@ -31,7 +31,7 @@ const Navigation = () => {
     return(
         <nav>
             <ul className='nav__links'>
-                <li><a href="#">Buy</a></li>
+                <li><a href="/landing">Buy</a></li>
                 <li> <Link to='/addland'>Register Land</Link></li>
             </ul>
 
