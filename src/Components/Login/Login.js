@@ -1,50 +1,50 @@
+import React, { useState } from "react";
+import Auth from "../../assets/auth.svg";
 
-
-
-import React,{useState} from 'react'
-import Auth from '../../assets/auth.svg'
-
-import '../Login/Login.css'
+import "../Login/Login.css";
 
 import Web3 from "web3";
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+// import { AuthContext } from "../../store/Context";
 
 function LoginContent() {
   const navigate = useNavigate();
   const [walletAddress, setwalletAddress] = useState("");
   const [isConnected, setIsConnected] = useState(false);
+
+ 
   
-const detectCurrentProvider = () => {
-  let provider;
-  if (window.ethereum) {
-    provider = window.ethereum;
-  } else if (window.web3) {
-    provider = window.web3.currentProvider;
-  } else {
-    console.log("Non-ethereum browser detected. You should install Metamask");
-  }
-  return provider;
-};
 
-const onConnect = async() => {
-  try {
-    const currentProvider = detectCurrentProvider();
-    if(currentProvider) {
-      await currentProvider.request({method: 'eth_requestAccounts'});
-      const web3 = new Web3(currentProvider);
-      const userAccount  =await web3.eth.getAccounts();
-      const account = userAccount[0];
-      let ethBalance = await web3.eth.getBalance(account);
-      setwalletAddress(account)
-      console.log(walletAddress)
-      setIsConnected(true);
+  const detectCurrentProvider = () => {
+    let provider;
+    if (window.ethereum) {
+      provider = window.ethereum;
+    } else if (window.web3) {
+      provider = window.web3.currentProvider;
+    } else {
+      console.log("Non-ethereum browser detected. You should install Metamask");
     }
-  } catch(err) {
-    console.log(err);
-  }
-}
+    return provider;
+  };
 
+  const onConnect = async () => {
+    try {
+      const currentProvider = detectCurrentProvider();
+      if (currentProvider) {
+        await currentProvider.request({ method: "eth_requestAccounts" });
+        const web3 = new Web3(currentProvider);
+        const userAccount = await web3.eth.getAccounts();
+        const account = userAccount[0];
+        let ethBalance = await web3.eth.getBalance(account);
+        setwalletAddress(account);
+        console.log(walletAddress);
+        setIsConnected(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // async function requestAccount(){
   //   if(window.ethereum){
@@ -84,29 +84,36 @@ const onConnect = async() => {
 
   // }
 
-  
-
   return (
-    <div className='outer_container'>
-        <img className='auth_img' src={Auth} alt=""  width="500px" height='500px'/>
-        {
+    <div className="outer_container">
+      <img
+        className="auth_img"
+        src={Auth}
+        alt=""
+        width="500px"
+        height="500px"
+      />
+      {
         // !isConnected &&
-         (
-          <div>
-            {/* <Link to={'/addland'}> */}
-        <button onClick={onConnect}theclassName='button'>Connect to metamask wallet</button>
-        {/* </Link> */}
-          </div>
-        )}
-        <br />
-        <a  href="/signup">If you are new register here</a>
+        <div>
+          {!isConnected ? (
+            <button onClick={onConnect} className="button">
+              Connect to metamask wallet
+            </button>
+          ) : (
+            <button onClick={onConnect} className="button">
+              Connected to metamask wallet
+            </button>
+          )}
+        </div>
+      }
+      <br />
+      <a href="/signup">If you are new register here</a>
     </div>
-  )
+  );
 }
 
-export default LoginContent
-
-
+export default LoginContent;
 
 // const [isConnected, setIsConnected] = useState(false);
 // const [ethBalance, setEthBalance] = useState("");
@@ -114,6 +121,3 @@ export default LoginContent
 // const onDisconnect = () => {
 //   setIsConnected(false);
 // }
-
-
-

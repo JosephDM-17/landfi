@@ -1,44 +1,63 @@
-import React from 'react'
-// import './Navbar.css'
-import logo from '../../assets/icons8-male-user-50.png'
-function Navbar() {
-  return (
-    <div className="absolute bg-031022 w-screen flex justify-between items-center">
-      <a href="#home">
-        <img
-          src={logo}
-          alt="landfi"
-          width="70px"
-          height="70px"
-          className="ml-5 md:ml-20 py-2"
-        ></img>
-      </a>
-      <div className="flex justify-end items-center">
-        <div className="max-h-14 mr-4 block md:hidden">
-          <button className='px-3 py-1 text-lg rounded-md bg-slate-600 text-white border-2
-        hover:bg-opacity-0 hover:text-orange-primary transition duration-300 ease-in-ou'>Sell</button>
-        </div>
-        <div className="max-h-14 mr-4 hidden md:block">
-        <button className='px-6 py-2 text-xl rounded-md bg-slate-600 text-white border-2
-        hover:bg-opacity-0 hover:text-orange-primary transition duration-300 ease-in-ou'>
-        Sell
-        </button>
-        </div>
-        <div className="max-h-14 mr-5 block md:hidden">
-        <button className='px-3 py-1 text-xl rounded-md bg-opacity-0 text-black border-2 boarder-slate-500
-          hover:text-purple-500 hover:border-black transition duration-300 ease-in-out'>Sign Up</button>
-        </div>
-        <div className="max-h-14  hidden md:block">
-        <button className='px-6 py-2 text-xl rounded-md bg-opacity-0 text-black border-2 border-slate-500
-          hover:text-orange-400 hover:border-black transition duration-300 ease-in-out'>Sign Up</button>
-        </div>
-        <div className="max-h-14 ">
-          <img className='px-3 py-1 rounded-full ' src={logo} alt="profile" />
-        </div>
-      </div>
-    </div>
+import React, {useState} from "react"
+import { Link } from "react-router-dom"
+import { ethers } from 'ethers'
+import logo from "../../assets/icons8-male-user-50.png"
+import "./Navbar.css"
+
+
+const Navigation = () => {
+    const [ account, setAccount ] = useState('')
+    const connectHandler = async () => {
+        // const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        // const account = accounts[0]
+        // setAccount(account);
+        if (typeof window !="undefined" && typeof window.ethereum !="undefined"){
+              try{
+                const accounts=await window.ethereum.request({method: "eth_requestAccounts"});
+                setAccount(accounts[0]);
+                // console.log(walletAddress);
+        
+              }catch(err){
+                console.log(err.message);
+              }
+            }else{
+              console.log("Please install MetaMask");
+            }
+    }
+
     
-  )
+
+
+    return(
+        <nav>
+            <ul className='nav__links'>
+                <li><a href="#">Buy</a></li>
+                <li> <Link to='/addland'>Register Land</Link></li>
+            </ul>
+
+            <div className='nav__brand'>
+                <img src={logo} alt="Logo" />
+                <h1>Landfi</h1>
+            </div>
+
+            {account ? (
+                <button
+                    type="button"
+                    className='nav__connect'
+                >
+                    {account.slice(0, 6) + '...' + account.slice(38, 42)}
+                </button>
+            ) : (
+                <button
+                    type="button"
+                    className='nav__connect'
+                    onClick={connectHandler}
+                >
+                    Connect
+                </button>
+            )}
+        </nav>
+    )
 }
 
-export default Navbar;
+export default Navigation;
