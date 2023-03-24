@@ -1,37 +1,30 @@
 
 .bg_container{
-    background-image: url(https://github.com/saurabh-m-w/Blockchain-Based-Property-Registration/blob/main/assets/landimg.jpg?raw=true);
+    background-image: url("../../assets/nature4.webp");
     background-position: center; 
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover;
     width:100%;
     height:100vh;
+    display: flex;
+    flex-direction: column;
     position: absolute;
 
 
 }
 
-.box_container{
+.inner_class1{
     display: flex;
-    flex-direction: column;  
-    justify-content: center;
-    align-items: center;
-    width:36rem;
-    height:30rem;
-    border: 2px solid;
-    border-color:  black; 
+    flex-direction: column; 
+    border: none;
     margin:50px auto;
     border-radius: 10px;
-    position: relative;
-    top:42%;
-    transform: translateY(-50%);
+    width:100%;
+    height:100vh;
+    font-size:60px ;
+    color: aliceblue;
+    font-weight: bold;
+    padding-left: 20px;
+   
 }
 
-h1
-{
-    
-    font-size: 25px;
-    font-family:Arial, Helvetica, sans-serif;
-    font-weight: bolder;
-
-}

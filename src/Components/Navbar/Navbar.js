@@ -5,8 +5,9 @@ import logo from "../../assets/icons8-male-user-50.png"
 import "./Navbar.css"
 
 
-const Navigation = () => {
-    const [ account, setAccount ] = useState('')
+const Navigation = (props) => {
+    const [ account, setAccount ] = useState(props.user)
+    const [isloggedIn, setIsloggedIn] = useState(false)
     const connectHandler = async () => {
         // const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         // const account = accounts[0]
@@ -15,6 +16,8 @@ const Navigation = () => {
               try{
                 const accounts=await window.ethereum.request({method: "eth_requestAccounts"});
                 setAccount(accounts[0]);
+                setIsloggedIn(true)
+                window.localStorage.setItem("user",accounts[0]);
                 // console.log(walletAddress);
         
               }catch(err){
@@ -31,7 +34,8 @@ const Navigation = () => {
     return(
         <nav>
             <ul className='nav__links'>
-                <li><a href="/landing">Buy</a></li>
+                <li><Link to='/'>Home</Link></li>
+                <li><Link to='/landingpage'>Buy</Link></li>
                 <li> <Link to='/addland'>Register Land</Link></li>
             </ul>
 
@@ -40,27 +44,33 @@ const Navigation = () => {
                 <h1>Landfi</h1>
             </div>
 
+            
+            <ul className="last_buttons"><li> <Link to='/lidashboard'>Land Inspector</Link></li>
+                {
+                    !isloggedIn ?<li> <a href='https://metamask.io/'>SignUp</a></li> : ""
+                }
+                    
             {account ? (
-                <button
+               <li><button
                     type="button"
                     className='nav__connect'
                 >
-                    {account.slice(0, 6) + '...' + account.slice(38, 42)}
-                </button>
+                    {account.slice(0, 4) + '...' + account.slice(40, 42)}
+                </button></li>
             ) : (
-                <button
+                <li><button
                     type="button"
                     className='nav__connect'
                     onClick={connectHandler}
                 >
-                    Connect
-                </button>
+                    Login
+                </button></li>
             )}
+
+            </ul>
+            
         </nav>
     )
-    
-
 }
-
 
 export default Navigation;

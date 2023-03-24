@@ -4,7 +4,6 @@ import Addland from "../Components/AddLand/Addland";
 function AddLand() {
   return (
     <div>
-      <Navbar />
      <Addland />
 
 

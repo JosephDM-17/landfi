@@ -11,8 +11,10 @@ import { useNavigate } from "react-router-dom";
 // import { storage } from "firebase-admin";
 import { storage } from "../../firebase/config";
 import { uploadBytes ,ref,getDownloadURL} from "firebase/storage";
-function Addland() {
+function Addland(props) {
   const navigate=useNavigate();
+
+
   // const {user} = useContext(AuthContext)
 
   const [name, setName] = useState("");
@@ -20,7 +22,7 @@ function Addland() {
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
   const [image, setImage] = useState();
-  const [account, setAccount] = useState("");
+  const [account, setAccount] = useState(props.user);
 
 
   const handleSubmit = async () => {
@@ -105,7 +107,7 @@ function Addland() {
             className="input"
             type="text"
             id="fname"
-            Value="0x4j5gk6hd6d;j"
+            Value={account}
             disabled
           />
           <label htmlFor="fname">Name</label>
