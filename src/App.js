@@ -6,6 +6,7 @@ import SignUp from './Pages/Signup';
 import Login from './Pages/Login';
 import AddLand from './Pages/AddLand';
 import LandingPage from './Pages/LandingPage';
+import ViewPost from './Pages/ViewPost';
 function App() {
   return (
     <div>
@@ -15,6 +16,7 @@ function App() {
         <Route path='/login' element={<Login/>} />
         <Route path='/addland' element={<AddLand/>}/>
         <Route path='/landing' element={<LandingPage/>}/>
+        <Route path='/viewpost' element={<ViewPost/>}/>
       </Routes>
       
    </div>

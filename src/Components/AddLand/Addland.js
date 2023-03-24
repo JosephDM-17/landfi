@@ -1,17 +1,20 @@
 import React, { useContext, useState } from "react";
 import "../AddLand/Addland.css";
 import { getFirestore, getDocs } from "firebase/firestore/lite";
-import { collection, addDoc,getDoc } from "firebase/firestore";
+import { collection, addDoc,getDoc} from "firebase/firestore";
 import { doc, setDoc } from "firebase/firestore";
 
 // import 'firebase/app'
 // import 'firebase/firebase'
 import { db } from "../../firebase/config";
-// import {FirebaseContext} from '../../store/Context'
 import { useNavigate } from "react-router-dom";
+// import { storage } from "firebase-admin";
+import { storage } from "../../firebase/config";
+import { uploadBytes ,ref,getDownloadURL} from "firebase/storage";
 function Addland() {
   const navigate=useNavigate();
-  // const {firebase} = useContext(FirebaseContext)
+  // const {user} = useContext(AuthContext)
+
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [email, setEmail] = useState("");
@@ -19,28 +22,49 @@ function Addland() {
   const [image, setImage] = useState();
   const [account, setAccount] = useState("");
 
+
   const handleSubmit = async () => {
-    
-
-
-
-    const frankDocRef = doc(db, "lands", "property");
-    await setDoc(frankDocRef, {
-      Name: name,
-      Email: email,
-      Price: price,
-      City: city,
+    const imageRef = ref(storage,`/images/${image.name}`);
+    const result = await uploadBytes(imageRef,image).then(()=>{
+      console.log('sucess');
+    }).catch((error)=>{
+      console.log(error);   
+      
+    })
+    getDownloadURL(ref(storage, `/images/${image.name}`))
+    .then(async (url) => {
+      // `url` is the download URL for 'images/stars.jpg'
+      await addDoc(collection(db, "lands") ,{
+        Name: name,
+        Email: email,
+        Price: price,
+        City: city,
+        Approved:false,
+        image:url,
     });
-
-    const docRef = doc(db, "lands", "property");
-    const docSnap = await getDoc(docRef);
+    console.log(url)
+    })
+    .catch((error) => {
+      // Handle any errors
+    });
     
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
-    }
+  //   const DocRef = await addDoc(collection(db, "lands") ,{
+  //     Name: name,
+  //     Email: email,
+  //     Price: price,
+  //     City: city,
+  //     Approved:false,
+  // });
+
+    // const docRef = doc(db, "lands");
+    // const docSnap = await getDoc(docRef);
+    
+    // if (docSnap.exists()) {
+    //   console.log("Document data:", docSnap.data());
+    // } else {
+    //   // doc.data() will be undefined in this case
+    //   console.log("No such document!");
+    // }
 
     setName('')
     setEmail('')
@@ -81,7 +105,7 @@ function Addland() {
             className="input"
             type="text"
             id="fname"
-            Value={account}
+            Value="0x4j5gk6hd6d;j"
             disabled
           />
           <label htmlFor="fname">Name</label>
@@ -143,7 +167,7 @@ function Addland() {
         {/* <img alt="Posts" width="200px" height="200px" src='../assets.auth.svg'></img> */}
         <br />
         <input
-          // onChange={(e)=>{setImage(e.target.files[0])}}
+          onChange={(e)=>{setImage(e.target.files[0])}}
           type="file"
         />
         <br />
